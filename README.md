@@ -1,7 +1,19 @@
-# consultant_web
+# AI Telecom Consultant Agent
 
-통신 매장 "상담 지원 AI Agent"(n8n 워크플로우 + Supabase)의 **시연 영상 촬영용 웹사이트**입니다.
-분석·추천·일정 계산·문자 생성은 모두 n8n이 하고, 이 웹사이트는 n8n을 호출하고 결과를 보여 주기만 합니다.
+통신 매장 상담 업무를 지원하기 위한 AI Agent 기반 고객 상담·추천·후속관리 시스템입니다.
+
+n8n 기반 워크플로우와 Supabase를 연동하여
+고객 정보 등록, 고객 분석, 맞춤 상품 추천, 상담 결과 처리,
+프로모션 대상 선정, 일정 관리 및 맞춤 메시지 생성·발송까지
+통합적으로 지원합니다.
+
+## Project Information
+
+- 프로젝트 유형: Team Project
+- 교육 과정: KT K-뉴딜 아카데미
+- 개발 기간: 2026.08 ~ 2026.10
+- 주요 기술: n8n, Supabase, OpenAI API, RAG, Next.js, TypeScript
+- 담당 분야: AI Agent / Workflow / Backend Integration
 
 | 경로 | 대상 | 설명 |
 |---|---|---|
@@ -174,3 +186,29 @@ curl -s -X POST "$N8N/web/promotion-register" -H "content-type: application/json
 - 촬영마다 **새 전화번호**를 쓰세요. 같은 번호로 다시 제출하면 동의 기록이 중복으로 쌓입니다.
 - 문자는 실제로 발송되지 않습니다(n8n의 발송 단계가 MOCK). 화면 상단에 "시연 모드"로 표기됩니다.
 - 알림 목록은 페이지를 새로고침하면 비워집니다. 촬영 중에는 새로고침하지 말고 왼쪽 메뉴로 이동하세요.
+
+## Repository
+
+This repository was imported from the original team project repository
+for portfolio preservation.
+
+Original Repository:
+https://github.com/minseong99/consultant_web
+
+## My Contributions
+
+### AI Agent Workflow
+- 고객 데이터 분석 워크플로우 구현
+- 상담 데이터 기반 고객 분석 및 분석 결과 저장
+- 고객 분석 + 상품/요금제 + RAG 기반 맞춤 추천
+- 상담 결과 분류 및 후속 상담 필요 여부 판단
+- 프로모션 문서 RAG 기반 대상 조건 추출
+- 프로모션 조건과 고객 데이터를 비교한 대상 고객 선정
+- Supabase 기반 Agent 간 데이터 연계
+
+### n8n / Supabase
+- n8n 서브 워크플로우 구조 설계
+- Supabase 테이블 연동 및 조회/저장 로직 구현
+- Supabase Vector Store 기반 RAG 구성
+- Structured Output Parser를 통한 Agent 출력 구조화
+- 워크플로우 간 입력/출력 형식 및 예외처리 구성
