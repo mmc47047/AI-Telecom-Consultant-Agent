@@ -172,7 +172,7 @@ curl -s -X POST "$N8N/web/promotion-register" -H "content-type: application/json
 
 - 문자 발송은 MOCK입니다. 실제 SMS는 나가지 않고 DB에 발송 완료로 기록됩니다.
 - 약정·재상담 일정은 재연락 동의가 있어야 생기고, 프로모션은 마케팅 동의까지 필요합니다.
-- 맞춤 추천은 DB에 저장되지 않고 화면에만 표시됩니다.
+- 맞춤 추천 결과는 상담 시점의 실시간 추천 정보로 활용하며 별도 DB에는 영구 저장하지 않습니다.
 - LLM을 거치는 호출(분석, 추천, 상담 결과, 문자 생성)은 10~55초가 걸립니다. 웹사이트의 n8n 호출 한도는 90초입니다.
 - `zWF04` 는 매일 09시와 18시(서울 시간)에 그날 예정된 일정을 조회해 발송합니다. 화면의 [지금 발송]은 이와 별개로 한 건을 바로 보냅니다.
 - OpenAI·Google Calendar·Postgres 자격증명이 유효해야 합니다. Google Calendar 자격증명이 만료되면 일정 생성이 중간에 실패합니다.
@@ -207,18 +207,29 @@ https://github.com/minseong99/consultant_web
 
 ## My Contributions
 
-### AI Agent Workflow
-- 고객 데이터 분석 워크플로우 구현
-- 상담 데이터 기반 고객 분석 및 분석 결과 저장
-- 고객 분석 + 상품/요금제 + RAG 기반 맞춤 추천
-- 상담 결과 분류 및 후속 상담 필요 여부 판단
-- 프로모션 문서 RAG 기반 대상 조건 추출
-- 프로모션 조건과 고객 데이터를 비교한 대상 고객 선정
-- Supabase 기반 Agent 간 데이터 연계
+### AI Agent / Workflow
+- 고객·상담 데이터를 기반으로 한 고객 분석 워크플로우 구현
+- 고객 분석 결과와 상품·요금제 정보를 결합한 AI 맞춤 추천 로직 구현
+- 상담 결과를 구매·보류·재상담 등으로 구조화하고 후속 연락 필요 여부 판단
+- 프로모션 문서를 Vector Store에 임베딩하고 RAG 기반으로 대상 조건 추출
+- 추출한 프로모션 조건과 고객 데이터를 비교하여 대상 고객 자동 선별
+- Structured Output Parser를 이용해 LLM 출력을 시스템에서 사용할 수 있는 JSON 구조로 표준화
 
-### n8n / Supabase
-- n8n 서브 워크플로우 구조 설계
-- Supabase 테이블 연동 및 조회/저장 로직 구현
-- Supabase Vector Store 기반 RAG 구성
-- Structured Output Parser를 통한 Agent 출력 구조화
-- 워크플로우 간 입력/출력 형식 및 예외처리 구성
+### Backend / Data Integration
+- n8n 서브 워크플로우 간 입력·출력 데이터 구조 설계
+- Supabase의 고객·상담·분석·일정 데이터 조회 및 저장 연동
+- Supabase Vector Store + OpenAI Embedding 기반 RAG 구성
+- 워크플로우 분기 및 예외처리 로직 구현
+- n8n Workflow와 Supabase 간 데이터 흐름 테스트 및 디버깅
+
+## Tech Stack
+
+| Category | Technology |
+|---|---|
+| Workflow / Agent | n8n |
+| LLM | OpenAI API |
+| RAG | OpenAI Embeddings, Supabase Vector Store |
+| Database | Supabase / PostgreSQL |
+| Frontend | Next.js, TypeScript |
+| Scheduling | Google Calendar |
+| Deployment | Vercel |
