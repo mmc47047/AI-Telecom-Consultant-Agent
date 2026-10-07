@@ -15,6 +15,14 @@ n8n 기반 워크플로우와 Supabase를 연동하여
 - 주요 기술: n8n, Supabase, OpenAI API, RAG, Next.js, TypeScript
 - 담당 분야: AI Agent / Workflow / Backend Integration
 
+## Demo
+
+🌐 **Live Demo**  
+https://consultant-web-beryl.vercel.app/
+
+> 실제 n8n Workflow와 Supabase가 연동된 시연 환경입니다.  
+> 문자 발송 기능은 실제 SMS 전송 대신 DB 상태를 갱신하는 MOCK 방식으로 처리됩니다.
+
 | 경로 | 대상 | 설명 |
 |---|---|---|
 | `/` | 고객 | 서비스 첫 화면. 상담 접수 시작, 오른쪽 위에 직원 로그인 |
